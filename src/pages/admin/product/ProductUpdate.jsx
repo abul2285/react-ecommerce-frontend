@@ -47,7 +47,6 @@ const ProductUpdate = ({ match, history }) => {
     setLoading(true);
     try {
       const { data } = await getProduct(match.params.slug);
-      console.log({ data });
       form.setFieldsValue({
         ...data,
         category: data.category._id,

@@ -37,7 +37,7 @@ const CategoryUpdate = ({ history, match }) => {
   useEffect(() => {
     getCategory(slug)
       .then((res) => {
-        form.setFieldsValue({ name: res.data.name });
+        form.setFieldsValue({ name: res.data.category.name });
       })
       .catch((err) => {
         console.log({ err });

@@ -23,6 +23,8 @@ import ProductCreate from './admin/product/ProductCreate';
 import AllProducts from './admin/product/AllProducts';
 import ProductUpdate from './admin/product/ProductUpdate';
 import Product from './Product';
+import CategoryHome from './category/CategoryHome';
+import SubHome from './sub/SubHome';
 
 const Pages = () => {
   const dispatch = useDispatch();
@@ -82,6 +84,8 @@ const Pages = () => {
         <AdminRoute exact path='/admin/product' component={ProductCreate} />
         <AdminRoute exact path='/admin/products' component={AllProducts} />
         <Route exact path='/product/:slug' component={Product} />
+        <Route exact path='/category/:slug' component={CategoryHome} />
+        <Route exact path='/sub/:slug' component={SubHome} />
         <AdminRoute
           exact
           path='/admin/product/:slug'

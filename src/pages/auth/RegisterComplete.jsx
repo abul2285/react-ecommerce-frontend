@@ -33,7 +33,6 @@ const CompleteRegistation = ({ history }) => {
         email,
         window.location.href
       );
-      console.log(result.user.emailVerified);
       if (result.user.emailVerified) {
         localStorage.removeItem('registerEmail');
         const user = auth.currentUser;
@@ -53,7 +52,6 @@ const CompleteRegistation = ({ history }) => {
             });
           })
           .catch((err) => console.log(err));
-        console.log('push');
         history.push('/');
       }
     } catch (error) {

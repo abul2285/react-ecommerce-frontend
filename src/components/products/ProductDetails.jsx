@@ -23,7 +23,7 @@ const ProductDetails = ({
 
       <List.Item>
         <Text>Category</Text>
-        <Link to={`category/${category.slug}`} className=''>
+        <Link to={`/category/${category.slug}`} className=''>
           <Text className='text-primary'>{category.name}</Text>
         </Link>
       </List.Item>

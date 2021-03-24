@@ -14,16 +14,27 @@ import { createOrUpdateUser } from '../../functions/auth';
 
 const Login = ({ history }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
+
   const roleBaseRedirect = (role) => {
-    if (role === 'admin') {
-      history.push('/admin/dashboard');
+    const intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
     } else {
-      history.push('/user/history');
+      if (role === 'admin') {
+        history.push('/admin/dashboard');
+      } else {
+        history.push('/user/history');
+      }
     }
   };
 
   useEffect(() => {
-    if (isAuthenticated) history.push('/');
+    const intended = history.location.state;
+    if (intended) {
+      return;
+    } else {
+      if (isAuthenticated) history.push('/');
+    }
   }, [history, isAuthenticated]);
   const dispatch = useDispatch();
   const handleSubmit = async ({ email, password }) => {

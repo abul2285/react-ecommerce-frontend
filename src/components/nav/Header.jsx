@@ -20,7 +20,6 @@ const Header = () => {
   const { isAuthenticated, auth: user } = useSelector((state) => state.user);
 
   const handleClick = (e) => {
-    console.log('click ', e);
     setCurrent(e.key);
   };
 

@@ -23,7 +23,6 @@ const SubUpdate = ({ history, match }) => {
   const { slug } = match.params;
 
   const [form] = Form.useForm();
-  console.log({ match });
   const handleSubmit = ({ name }) => {
     setLoading(true);
     updateSub(slug, { name, parent: category }, auth.token)
@@ -57,9 +56,8 @@ const SubUpdate = ({ history, match }) => {
 
   const loadSub = () =>
     getSub(slug).then((res) => {
-      console.log({ res });
-      form.setFieldsValue({ name: res.data.name });
-      setCategory(res.data.parent);
+      form.setFieldsValue({ name: res.data.sub.name });
+      setCategory(res.data.sub.parent);
     });
 
   return (
