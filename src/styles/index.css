@@ -1,0 +1,9 @@
+.slide img {
+  height: 450px;
+  object-fit: cover;
+}
+
+.thumb img {
+  height: 70px;
+  object-fit: cover;
+}
