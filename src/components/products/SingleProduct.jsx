@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import { Card, Tabs } from 'antd';
+import { Card, Tabs, Tooltip } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ProductDetails from './ProductDetails';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
 import AvarageRating from './AvarageRating';
+import _ from 'lodash';
+import { useDispatch } from 'react-redux';
 
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, onStartClick, star }) => {
   const { images, title, description, _id } = product;
+  const [tooltip, setTooltip] = useState('Click To Add');
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    let cart = [];
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart'));
+    }
+
+    cart.push({
+      ...product,
+      count: 1,
+    });
+
+    const unique = _.uniqWith(cart, _.isEqual);
+    dispatch({ type: 'ADD_TO_CART', payload: unique });
+    localStorage.setItem('cart', JSON.stringify(unique));
+    setTooltip('Added');
+  };
   return (
     <>
       <div className='col-md-7'>
@@ -39,10 +60,12 @@ const SingleProduct = ({ product, onStartClick, star }) => {
         )}
         <Card
           actions={[
-            <>
-              <ShoppingCartOutlined className='text-success' /> <br /> Add to
-              Cart
-            </>,
+            <Tooltip title={tooltip}>
+              <a onClick={handleAddToCart}>
+                <ShoppingCartOutlined className='text-danger' /> <br /> Add to
+                cart
+              </a>
+            </Tooltip>,
             <Link to='/'>
               <HeartOutlined className='text-info' /> <br /> Add to Wishlist
             </Link>,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, notification } from 'antd';
+import { Badge, Menu, notification } from 'antd';
 import {
   AppstoreOutlined,
   LogoutOutlined,
@@ -20,7 +20,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isAuthenticated, auth: user } = useSelector((state) => state.user);
-
+  const cart = useSelector((state) => state.cart);
   const handleClick = (e) => {
     setCurrent(e.key);
   };
@@ -48,6 +48,14 @@ const Header = () => {
 
       <Item key='shop' icon={<ShoppingOutlined />}>
         <Link to='/shop'>Shop</Link>
+      </Item>
+
+      <Item key='cart' icon={<ShoppingOutlined />}>
+        <Link to='/cart'>
+          <Badge count={cart.length} offset={[9, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
 
       {!isAuthenticated ? (
