@@ -7,7 +7,7 @@ import AvarageRating from '../products/AvarageRating';
 const { Meta } = Card;
 
 const ProductCard = ({ product, handleRemoveProduct }) => {
-  const { images, title, description, slug } = product;
+  const { images, title, description, slug, price } = product;
   return (
     <>
       {product?.ratings?.length > 0 ? (
@@ -36,7 +36,7 @@ const ProductCard = ({ product, handleRemoveProduct }) => {
             <ShoppingCartOutlined className='text-danger' /> <br /> Add to cart
           </>,
         ]}>
-        <Meta title={title} description={description} />
+        <Meta title={`${title}-$${price}`} description={description} />
       </Card>
     </>
   );

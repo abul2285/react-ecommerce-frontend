@@ -4,6 +4,7 @@ import {
   AppstoreOutlined,
   LogoutOutlined,
   SettingOutlined,
+  ShoppingOutlined,
   UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -11,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authTypes } from '../../redux/types';
 import { auth } from '../../firebase';
+import Search from '../forms/Search';
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
@@ -43,6 +45,11 @@ const Header = () => {
       <Item key='home' icon={<AppstoreOutlined />}>
         <Link to='/'>Home</Link>
       </Item>
+
+      <Item key='shop' icon={<ShoppingOutlined />}>
+        <Link to='/shop'>Shop</Link>
+      </Item>
+
       {!isAuthenticated ? (
         <>
           <Item
@@ -76,6 +83,9 @@ const Header = () => {
           </Menu.Item>
         </SubMenu>
       )}
+      <span className='float-right p-1'>
+        <Search />
+      </span>
     </Menu>
   );
 };

@@ -51,3 +51,8 @@ export const productStar = async (productId, star, authtoken) => {
 export const getRelatedProducts = async (productId) => {
   return await axios.get(`/product/related/${productId}`);
 };
+
+// search / filter
+export const getProductsByFilters = async (args) => {
+  return await axios.post('/search/filters', args);
+};
