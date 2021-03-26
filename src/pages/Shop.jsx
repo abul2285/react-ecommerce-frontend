@@ -47,7 +47,11 @@ const Shop = () => {
   // load product by search
   useEffect(() => {
     const delayed = setTimeout(() => {
-      loadProductByFilter({ query: text });
+      if (!text) {
+        loadAllProducts();
+      } else {
+        loadProductByFilter({ query: text });
+      }
     }, 300);
     return () => clearTimeout(delayed);
   }, [text]);

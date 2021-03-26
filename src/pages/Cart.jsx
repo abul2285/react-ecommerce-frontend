@@ -1,12 +1,12 @@
-import { Button } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCartInCheckout from '../components/cards/ProductCartInCheckout';
+import { userCart } from '../functions/user';
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const cart = useSelector((state) => state.cart);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, auth } = useSelector((state) => state.user);
 
   const getTotalPrice = () => cart.reduce((a, c) => a + c.price * c.count, 0);
   const showCartItems = () => (
@@ -28,6 +28,14 @@ const Cart = () => {
       ))}
     </table>
   );
+
+  const saveToDb = () => {
+    userCart(cart, auth.token)
+      .then((res) => {
+        if (res.data.ok) history.push('/checkout');
+      })
+      .catch((err) => console.log('cart save err', err));
+  };
 
   return (
     <div className='container-fluid pt-2'>
@@ -59,7 +67,10 @@ const Cart = () => {
           </p>
           <hr />
           {isAuthenticated ? (
-            <button className='text-center btn  btn-primary btn-raised'>
+            <button
+              className='text-center btn  btn-primary btn-raised'
+              disabled={!cart.length}
+              onClick={saveToDb}>
               Procced to checkout
             </button>
           ) : (

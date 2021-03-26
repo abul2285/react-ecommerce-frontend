@@ -28,6 +28,7 @@ import SubHome from './sub/SubHome';
 import Shop from './Shop';
 import Cart from './Cart';
 import SideDrawer from '../components/drawer/SideDrawer';
+import Checkout from './Checkout';
 
 const Pages = () => {
   const dispatch = useDispatch();
@@ -92,6 +93,7 @@ const Pages = () => {
         <Route exact path='/sub/:slug' component={SubHome} />
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/cart' component={Cart} />
+        <Route exact path='/checkout' component={Checkout} />
         <AdminRoute
           exact
           path='/admin/product/:slug'
