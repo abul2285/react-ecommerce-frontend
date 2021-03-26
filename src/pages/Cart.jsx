@@ -59,13 +59,15 @@ const Cart = () => {
           </p>
           <hr />
           {isAuthenticated ? (
-            <Button type='link'>Procced to checkout</Button>
+            <button className='text-center btn  btn-primary btn-raised'>
+              Procced to checkout
+            </button>
           ) : (
-            <Button type='link'>
+            <button className='text-center btn btn-primary btn-raised'>
               <Link to={{ pathname: '/login', state: { from: 'cart' } }}>
                 Login to checkout
               </Link>
-            </Button>
+            </button>
           )}
         </div>
       </div>

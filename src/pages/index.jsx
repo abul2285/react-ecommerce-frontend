@@ -27,6 +27,7 @@ import CategoryHome from './category/CategoryHome';
 import SubHome from './sub/SubHome';
 import Shop from './Shop';
 import Cart from './Cart';
+import SideDrawer from '../components/drawer/SideDrawer';
 
 const Pages = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const Pages = () => {
   return (
     <>
       <Header />
+      <SideDrawer />
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />

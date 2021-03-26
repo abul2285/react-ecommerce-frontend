@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import { Card, Tabs, Tooltip } from 'antd';
+import { Card, Tabs, Tooltip, Image } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ProductDetails from './ProductDetails';
@@ -10,6 +10,7 @@ import RatingModal from '../modal/RatingModal';
 import AvarageRating from './AvarageRating';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
+import laptop from '../../images/default-laptop.jpg';
 
 const { TabPane } = Tabs;
 
@@ -31,17 +32,28 @@ const SingleProduct = ({ product, onStartClick, star }) => {
 
     const unique = _.uniqWith(cart, _.isEqual);
     dispatch({ type: 'ADD_TO_CART', payload: unique });
+    dispatch({ type: 'SET_VISIBLE', payload: true });
     localStorage.setItem('cart', JSON.stringify(unique));
     setTooltip('Added');
   };
   return (
     <>
       <div className='col-md-7'>
-        <Carousel>
-          {images?.map((i) => (
-            <img src={i.url} key={i.public_id} alt={i.pulbic_id} />
-          ))}
-        </Carousel>
+        {images?.length ? (
+          <Carousel>
+            {images?.map((i) => (
+              <img
+                src={i.url}
+                key={i.public_id}
+                alt={i.pulbic_id}
+                height='450px'
+              />
+            ))}
+          </Carousel>
+        ) : (
+          <Image src={laptop} />
+        )}
+
         <Tabs type='card'>
           <TabPane tab='Description' key='1'>
             {description}

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AvarageRating from '../products/AvarageRating';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
+import laptop from '../../images/default-laptop.jpg';
 
 const { Meta } = Card;
 
@@ -26,6 +27,7 @@ const ProductCard = ({ product, handleRemoveProduct }) => {
 
     const unique = _.uniqWith(cart, _.isEqual);
     dispatch({ type: 'ADD_TO_CART', payload: unique });
+    dispatch({ type: 'SET_VISIBLE', payload: true });
     localStorage.setItem('cart', JSON.stringify(unique));
     setTooltip('Added');
   };
@@ -40,10 +42,7 @@ const ProductCard = ({ product, handleRemoveProduct }) => {
       <Card
         cover={
           <img
-            src={
-              images[0]?.url ||
-              'http://ninajohansson.se/wp-content/themes/koji/assets/images/default-fallback-image.png'
-            }
+            src={images[0]?.url || laptop}
             alt={images[0]?.public_id || 'fallback alt'}
             style={{ height: '150px', objectFit: 'cover' }}
             className='p-1'
