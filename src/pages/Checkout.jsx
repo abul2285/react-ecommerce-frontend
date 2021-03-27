@@ -1,17 +1,25 @@
-import { notification } from 'antd';
+import { Button, Input, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCart, emptyUserCart, saveUserAddress } from '../functions/user';
+import {
+  getUserCart,
+  emptyUserCart,
+  saveUserAddress,
+  userCoupon,
+} from '../functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [discountError, setDiscountError] = useState('');
   const dispatch = useDispatch();
   const [address, setAddress] = useState('');
   const [addressSave, setAddressSave] = useState(false);
   const { auth } = useSelector((state) => state.user);
+  const [coupon, setCoupon] = useState();
 
   useEffect(() => {
     getUserCart(auth.token)
@@ -27,6 +35,8 @@ const Checkout = () => {
     emptyUserCart(auth.token).then((res) => {
       localStorage.removeItem('cart');
       dispatch({ type: 'EMPTY_CART' });
+      setCoupon('');
+      setTotalAfterDiscount(0);
       notification.success({
         title: 'Cart is Empty. Go to Shopping',
         description: 'Cart is Empty. Go to Shopping',
@@ -47,6 +57,19 @@ const Checkout = () => {
     });
   };
 
+  const applyCoupon = () => {
+    userCoupon({ coupon }, auth.token).then((res) => {
+      if (res.data.err) {
+        setDiscountError(res.data.err);
+        dispatch({ type: 'APPLIED_COUPON', payload: false });
+      }
+      if (res.data.totalAfterDiscount) {
+        setTotalAfterDiscount(res.data.totalAfterDiscount);
+        dispatch({ type: 'APPLIED_COUPON', payload: true });
+      }
+    });
+  };
+
   return (
     <div className='container-fluid'>
       <div className='row'>
@@ -59,6 +82,19 @@ const Checkout = () => {
             Save
           </button>
           <hr />
+          <h4>Got Coupon?</h4>
+          <Input
+            size='large'
+            onChange={(e) => {
+              setDiscountError('');
+              setCoupon(e.target.value);
+            }}
+            value={coupon}
+          />
+          <Button onClick={applyCoupon} type='link'>
+            Apply
+          </Button>
+          {discountError && <p className='bg-danger'>{discountError}</p>}
         </div>
         <div className='col-md-6'>
           <h4>Order Summary</h4>
@@ -75,11 +111,17 @@ const Checkout = () => {
           ))}
           <hr />
           <p>Cart Total : ${total}</p>
+          {totalAfterDiscount > 0 && (
+            <p className='bg-success'>
+              Coupon Appliyed: Total payable ${totalAfterDiscount}
+            </p>
+          )}
           <hr />
           <div className='row'>
             <div className='col-md-6'>
               <button
                 className='btn btn-primary'
+                onClick={() => history.push('/payment')}
                 disabled={!products.length || !addressSave}>
                 Place Order
               </button>

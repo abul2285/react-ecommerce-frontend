@@ -77,16 +77,16 @@ const Header = () => {
           title={user.email.split('@')[0]}
           className='float-right'>
           {user && user.role === 'admin' && (
-            <Menu.Item>
+            <Menu.Item key='me'>
               <Link to='/admin/dashboard'>Dashboard</Link>
             </Menu.Item>
           )}
           {user && user.role === 'subscriber' && (
-            <Menu.Item>
+            <Menu.Item key='me2'>
               <Link to='/user/history'>Dashboard</Link>
             </Menu.Item>
           )}
-          <Menu.Item icon={<LogoutOutlined />} onClick={handleLogout}>
+          <Menu.Item key='me3' icon={<LogoutOutlined />} onClick={handleLogout}>
             Log Out
           </Menu.Item>
         </SubMenu>

@@ -19,4 +19,10 @@ const saveUserAddress = async (address, authtoken) => {
   );
 };
 
-export { userCart, getUserCart, emptyUserCart, saveUserAddress };
+const userCoupon = async (coupon, authtoken) => {
+  return await axios.post('/user/cart/coupon', coupon, {
+    headers: { authtoken },
+  });
+};
+
+export { userCart, getUserCart, emptyUserCart, saveUserAddress, userCoupon };
