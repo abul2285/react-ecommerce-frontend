@@ -3,8 +3,12 @@ import axios from 'axios';
 const userCart = async (cart, authtoken) => {
   return await axios.post('/user/cart', { cart }, { headers: { authtoken } });
 };
+
 const getUserCart = async (authtoken) => {
   return await axios.get('/user/cart', { headers: { authtoken } });
+};
+const getUserOrders = async (authtoken) => {
+  return await axios.get('/user/orders', { headers: { authtoken } });
 };
 
 const emptyUserCart = async (authtoken) => {
@@ -25,4 +29,22 @@ const userCoupon = async (coupon, authtoken) => {
   });
 };
 
-export { userCart, getUserCart, emptyUserCart, saveUserAddress, userCoupon };
+const createOrder = async (stripeResponse, authtoken) => {
+  return await axios.post(
+    '/user/order',
+    { stripeResponse },
+    {
+      headers: { authtoken },
+    }
+  );
+};
+
+export {
+  userCart,
+  getUserCart,
+  emptyUserCart,
+  saveUserAddress,
+  userCoupon,
+  createOrder,
+  getUserOrders,
+};

@@ -54,9 +54,9 @@ const ProductCard = ({ product, handleRemoveProduct }) => {
             <br /> View product
           </Link>,
           <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-              <ShoppingCartOutlined className='text-danger' /> <br /> Add to
-              cart
+            <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+              <ShoppingCartOutlined className='text-danger' /> <br />
+              {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
             </a>
           </Tooltip>,
         ]}>

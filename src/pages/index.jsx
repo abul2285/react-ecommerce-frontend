@@ -95,9 +95,9 @@ const Pages = () => {
         <Route exact path='/category/:slug' component={CategoryHome} />
         <Route exact path='/sub/:slug' component={SubHome} />
         <Route exact path='/shop' component={Shop} />
-        <Route exact path='/cart' component={Cart} />
-        <Route exact path='/payment' component={Payment} />
-        <Route exact path='/checkout' component={Checkout} />
+        <UserRoute exact path='/cart' component={Cart} />
+        <UserRoute exact path='/payment' component={Payment} />
+        <UserRoute exact path='/checkout' component={Checkout} />
         <AdminRoute
           exact
           path='/admin/product/:slug'
