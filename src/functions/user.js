@@ -38,6 +38,29 @@ const createOrder = async (stripeResponse, authtoken) => {
     }
   );
 };
+const addToWishList = async (productId, authtoken) => {
+  return await axios.post(
+    '/user/wishlist',
+    { productId },
+    {
+      headers: { authtoken },
+    }
+  );
+};
+const removeFromWishList = async (productId, authtoken) => {
+  return await axios.put(
+    `/user/wishlist/${productId}`,
+    {},
+    {
+      headers: { authtoken },
+    }
+  );
+};
+const getWishList = async (authtoken) => {
+  return await axios.get('/user/wishlist', {
+    headers: { authtoken },
+  });
+};
 
 export {
   userCart,
@@ -47,4 +70,7 @@ export {
   userCoupon,
   createOrder,
   getUserOrders,
+  addToWishList,
+  removeFromWishList,
+  getWishList,
 };
