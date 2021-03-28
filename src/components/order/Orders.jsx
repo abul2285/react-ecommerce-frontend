@@ -7,6 +7,7 @@ const orderStatuses = [
   'Dispatched',
   'Cancelled',
   'Completed',
+  'Cash On Delivery',
 ];
 
 const Orders = ({ orders, handleOrderStatus }) => {
@@ -46,7 +47,9 @@ const Orders = ({ orders, handleOrderStatus }) => {
                 defaultValue={order.orderStatus}
                 onChange={(e) => handleOrderStatus(order._id, e.target.value)}>
                 {orderStatuses.map((status) => (
-                  <option value={status}>{status}</option>
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
                 ))}
               </select>
             </td>

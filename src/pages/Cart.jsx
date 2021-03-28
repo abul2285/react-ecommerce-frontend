@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCartInCheckout from '../components/cards/ProductCartInCheckout';
 import { userCart } from '../functions/user';
@@ -7,6 +7,7 @@ import { userCart } from '../functions/user';
 const Cart = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { isAuthenticated, auth } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const getTotalPrice = () => cart.reduce((a, c) => a + c.price * c.count, 0);
   const showCartItems = () => (
@@ -32,6 +33,15 @@ const Cart = ({ history }) => {
   const saveToDb = () => {
     userCart(cart, auth.token)
       .then((res) => {
+        if (res.data.ok) history.push('/checkout');
+      })
+      .catch((err) => console.log('cart save err', err));
+  };
+
+  const saveCashToDb = () => {
+    userCart(cart, auth.token)
+      .then((res) => {
+        dispatch({ type: 'COD', payload: true });
         if (res.data.ok) history.push('/checkout');
       })
       .catch((err) => console.log('cart save err', err));
@@ -67,12 +77,20 @@ const Cart = ({ history }) => {
           </p>
           <hr />
           {isAuthenticated ? (
-            <button
-              className='text-center btn  btn-primary btn-raised'
-              disabled={!cart.length}
-              onClick={saveToDb}>
-              Procced to checkout
-            </button>
+            <>
+              <button
+                className='text-center btn  btn-primary btn-raised'
+                disabled={!cart.length}
+                onClick={saveToDb}>
+                Procced to checkout
+              </button>
+              <button
+                className='text-center btn  btn-primary btn-raised'
+                disabled={!cart.length}
+                onClick={saveCashToDb}>
+                Pay on delivery
+              </button>
+            </>
           ) : (
             <button className='text-center btn btn-primary btn-raised'>
               <Link to={{ pathname: '/login', state: { from: 'cart' } }}>

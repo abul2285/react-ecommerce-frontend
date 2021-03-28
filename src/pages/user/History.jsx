@@ -61,7 +61,7 @@ const History = () => {
   );
 
   const showOrders = () =>
-    orders.map((order) => (
+    orders.reverse().map((order) => (
       <div key={order._id} className='m-5 p-3 cart'>
         <OrderInfo orderStatus={order.orderStatus} {...order.paymentIntent} />
         {showOrderInTable(order)}
